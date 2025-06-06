@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persistent Text Editor</title>
+    <style>
+        :root {
+            --columns: 150;
+            --rows: 25;
+        }
+
+        textarea {
+            width: calc(10px * var(--columns));
+            height: calc(1.5em * var(--rows));
+            font-family: monospace;
+            margin-top: 5px;
+      		border-radius: 10px;
+        }
+      
+      button {
+      	color: white;
+     	background-color: #4169e1;
+      	border-radius: 10px;
+      }
+      
+      html {
+      background-color: #555555;
+      
+      }
+      
+    </style>
+</head>
+<body>
+
+    <label for="rows">Number of Rows:</label>
+    <input id="rows" type="number" value="25" min="1">
+
+    <label for="columns">Number of Columns:</label>
+    <input id="columns" type="number" value="200" min="1">
+
+    <button onclick="updateSettings()">Update Settings</button>
+  <br>
+
+    <textarea id="editor" placeholder="Start typing..."></textarea>
+
+    <script>
+        const editor = document.getElementById("editor");
+        const rowsInput = document.getElementById("rows");
+        const columnsInput = document.getElementById("columns");
+
+        // Load saved text
+        editor.value = localStorage.getItem("savedText") || "";
+
+        // Save changes automatically
+        editor.addEventListener("input", () => {
+            localStorage.setItem("savedText", editor.value);
+        });
+
+        function updateSettings() {
+            document.documentElement.style.setProperty("--columns", columnsInput.value);
+            document.documentElement.style.setProperty("--rows", rowsInput.value);
+        }
+    </script>
+
+</body>
+</html>
